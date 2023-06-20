@@ -20,10 +20,16 @@ import {
   CustomDrawerHeader,
 } from "./components/configsDrawer";
 import { CustomAppBar } from "./components/appBar";
+import { useDispatch } from "react-redux";
+import { clicksIconDrawer } from "../../store/modules/drawer/actions";
 
-interface Menu {
+interface items {
   text: string;
   icon: JSX.Element;
+}
+
+interface Menu {
+  item: items[];
   divider: string;
 }
 
@@ -38,6 +44,19 @@ type Props = {
 };
 
 const CustomDrawer = (props: Props) => {
+  const dispatch = useDispatch();
+
+  const clickButtons = React.useCallback(
+    (text: string) => {
+      dispatch(
+        clicksIconDrawer({
+          text: text,
+        })
+      );
+    },
+    [dispatch]
+  );
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -86,7 +105,7 @@ const CustomDrawer = (props: Props) => {
         <Divider />
         <List>
           {props.menu.map((item, index) => (
-            <>
+            <div key={index}>
               <Typography
                 sx={{
                   opacity: props.open ? 1 : 0,
@@ -97,33 +116,40 @@ const CustomDrawer = (props: Props) => {
               >
                 <strong>{item.divider}</strong>
               </Typography>
-              <ListItem key={index} disablePadding sx={{ display: "block" }}>
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: props.open ? "initial" : "center",
-                    px: 2.5,
-                  }}
+              {item.item.map((item, id) => (
+                <ListItem
+                  onClick={() => clickButtons(item.text)}
+                  key={id}
+                  disablePadding
+                  sx={{ display: "block" }}
                 >
-                  <ListItemIcon
+                  <ListItemButton
                     sx={{
-                      minWidth: 0,
-                      mr: props.open ? 3 : "auto",
-                      justifyContent: "center",
+                      minHeight: 48,
+                      justifyContent: props.open ? "initial" : "center",
+                      px: 2.5,
                     }}
                   >
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText sx={{ opacity: props.open ? 1 : 0 }} />
-                  <Typography
-                    sx={{ display: props.open ? "block" : "none" }}
-                    variant="overline"
-                  >
-                    <strong>{item.text}</strong>
-                  </Typography>
-                </ListItemButton>
-              </ListItem>
-            </>
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: props.open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {item.icon}
+                    </ListItemIcon>
+                    <ListItemText sx={{ opacity: props.open ? 1 : 0 }} />
+                    <Typography
+                      sx={{ display: props.open ? "block" : "none" }}
+                      variant="overline"
+                    >
+                      <strong>{item.text}</strong>
+                    </Typography>
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </div>
           ))}
         </List>
       </CustomDrawerConfig>

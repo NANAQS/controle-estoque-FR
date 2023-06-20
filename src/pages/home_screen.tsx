@@ -1,57 +1,10 @@
-import * as React from "react";
-import CustomDrawer from "../components/drawer";
-import { Person } from "@mui/icons-material";
-import { AccountBox } from "@mui/icons-material";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import PaperCustom from "../components/customCard";
+import CustomDrawerDefault from "../components/customDefaultDrawer";
 
 export default function HomeScreen() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   return (
-    <CustomDrawer
-      menu={[
-        {
-          divider: "GERENCIAMENTO",
-          icon: <AccountBox color="primary" />,
-          text: "Inbox",
-        },
-        {
-          divider: "MOVIMENTAÇÃO",
-          icon: <AccountBox color="primary" />,
-          text: "Inbox",
-        },
-      ]}
-      handleDrawerClose={handleDrawerClose}
-      handleDrawerOpen={handleDrawerOpen}
-      open={open}
-      left={
-        <div style={{ display: "inline-flex" }}>
-          <p style={{ margin: 2 }}>
-            <Typography variant="caption" display="block">
-              Voce está logado como <strong>admin</strong>
-            </Typography>
-          </p>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Person color="primary" />
-          </div>
-        </div>
-      }
-    >
+    <CustomDrawerDefault>
       <h1>kkk</h1>
       <Grid container spacing={2}>
         <PaperCustom
@@ -81,6 +34,6 @@ export default function HomeScreen() {
           tituloBotao="Margem de Lucro: 0,00%"
         />
       </Grid>
-    </CustomDrawer>
+    </CustomDrawerDefault>
   );
 }

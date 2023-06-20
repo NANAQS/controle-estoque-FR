@@ -1,5 +1,11 @@
+import CustomDrawerDefault from "../components/customDefaultDrawer";
+
 type Props = {};
 
 export default function ProdutosScreen({}: Props) {
-  return <div>ProdutosScreen</div>;
+  return (
+    <CustomDrawerDefault>
+      <h1>Tela Produtos</h1>
+    </CustomDrawerDefault>
+  );
 }
