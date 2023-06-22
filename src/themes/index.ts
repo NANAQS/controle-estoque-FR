@@ -31,6 +31,10 @@ export const theme = createTheme({
         subtitle2: {
           color: "#BFD5E1",
         },
+        body1: {
+          color: SECUNDARY,
+          fontSize: 40,
+        },
       },
     },
     MuiIconButton: {

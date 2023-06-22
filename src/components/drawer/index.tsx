@@ -45,6 +45,7 @@ type Props = {
 
 const CustomDrawer = (props: Props) => {
   const dispatch = useDispatch();
+  const [windowWidth, _] = React.useState(window.innerWidth > 1032);
 
   const clickButtons = React.useCallback(
     (text: string) => {
@@ -61,6 +62,7 @@ const CustomDrawer = (props: Props) => {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <CustomAppBar
+        elevation={windowWidth ? 0 : 1}
         color="secondary"
         sx={{
           display: "flex",
@@ -71,18 +73,21 @@ const CustomDrawer = (props: Props) => {
       >
         <Toolbar>
           <Box sx={{ flexGrow: 1 }}>
-            <IconButton
-              color="primary"
-              aria-label="open drawer"
-              onClick={props.handleDrawerOpen}
-              edge="start"
-              sx={{
-                marginRight: 5,
-                ...(props.open && { display: "none" }),
-              }}
-            >
-              <Menu />
-            </IconButton>
+            {windowWidth ? null : (
+              <IconButton
+                color="primary"
+                aria-label="open drawer"
+                onClick={props.handleDrawerOpen}
+                edge="start"
+                sx={{
+                  marginRight: 5,
+                  ...(props.open && { display: "none" }),
+                }}
+              >
+                <Menu />
+              </IconButton>
+            )}
+            <img src="/public/vite.svg" />
             <Typography variant="h6" noWrap component="div">
               {props.title}
             </Typography>
@@ -96,11 +101,16 @@ const CustomDrawer = (props: Props) => {
           </Box>
         </Toolbar>
       </CustomAppBar>
-      <CustomDrawerConfig variant="permanent" open={props.open}>
+      <CustomDrawerConfig
+        variant={"permanent"}
+        open={windowWidth ? true : props.open}
+      >
         <CustomDrawerHeader>
-          <IconButton onClick={props.handleDrawerClose}>
-            <ChevronRight color="primary" />
-          </IconButton>
+          {windowWidth ? null : (
+            <IconButton onClick={props.handleDrawerClose}>
+              <ChevronRight color="primary" />
+            </IconButton>
+          )}
         </CustomDrawerHeader>
         <Divider />
         <List>
@@ -108,7 +118,7 @@ const CustomDrawer = (props: Props) => {
             <div key={index}>
               <Typography
                 sx={{
-                  opacity: props.open ? 1 : 0,
+                  opacity: windowWidth ? 1 : props.open ? 1 : 0,
                   marginLeft: 5,
                 }}
                 variant="subtitle2"
@@ -133,19 +143,29 @@ const CustomDrawer = (props: Props) => {
                     <ListItemIcon
                       sx={{
                         minWidth: 0,
-                        mr: props.open ? 3 : "auto",
+                        mr: windowWidth ? 3 : props.open ? 3 : "auto",
                         justifyContent: "center",
                       }}
                     >
                       {item.icon}
                     </ListItemIcon>
-                    <ListItemText sx={{ opacity: props.open ? 1 : 0 }} />
-                    <Typography
-                      sx={{ display: props.open ? "block" : "none" }}
-                      variant="overline"
+                    <ListItemText
+                      sx={{ opacity: windowWidth ? 1 : props.open ? 1 : 0 }}
                     >
-                      <strong>{item.text}</strong>
-                    </Typography>
+                      <Typography
+                        sx={{
+                          display: windowWidth
+                            ? "block"
+                            : props.open
+                            ? "block"
+                            : "none",
+                          textAlign: "center",
+                        }}
+                        variant="overline"
+                      >
+                        <strong>{item.text}</strong>
+                      </Typography>
+                    </ListItemText>
                   </ListItemButton>
                 </ListItem>
               ))}
@@ -153,7 +173,7 @@ const CustomDrawer = (props: Props) => {
           ))}
         </List>
       </CustomDrawerConfig>
-      <Box component="main" sx={{ flexGrow: 1, p: 5 }}>
+      <Box component="main" sx={{ flexGrow: 1 }}>
         {props.children}
       </Box>
     </Box>
