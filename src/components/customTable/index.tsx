@@ -124,13 +124,7 @@ const DynamicTable: React.FC<TableProps> = ({ tableHeader, tableData }) => {
               {paginatedData.map((row, index) => (
                 <TableRow key={index}>
                   {row.map((cell, cellIndex) => (
-                    <TableCell key={cellIndex}>
-                      {typeof cell === "object" ? (
-                        <img width="50" src={cell.src} alt={cell.alt} />
-                      ) : (
-                        cell
-                      )}
-                    </TableCell>
+                    <TableCell key={cellIndex}>{cell}</TableCell>
                   ))}
                 </TableRow>
               ))}

@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import PaperCustom from "../components/customCard";
 import CustomDrawerDefault from "../components/customDefaultDrawer";
+import { CustomChartLine } from "../components/customChartLine";
 
 export default function HomeScreen() {
   return (
@@ -33,6 +34,14 @@ export default function HomeScreen() {
           color="#f27e30"
           tituloBotao="Margem de Lucro: 0,00%"
         />
+      </Grid>
+      <Grid sx={{ marginTop: 10 }} container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <CustomChartLine />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <CustomChartLine />
+        </Grid>
       </Grid>
     </CustomDrawerDefault>
   );
