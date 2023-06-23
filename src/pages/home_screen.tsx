@@ -37,10 +37,51 @@ export default function HomeScreen() {
       </Grid>
       <Grid sx={{ marginTop: 10 }} container spacing={2}>
         <Grid item xs={12} sm={6}>
-          <CustomChartLine />
+          <CustomChartLine
+            labels={[
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+            ]}
+            title={"Entradas e saídas dos ultimos 10 dias"}
+            heads={[
+              {
+                colors: "green",
+                data: [1, 2, 3, 1, 2],
+                label: "Entrada",
+              },
+              {
+                colors: "blue",
+                data: [2, 4, 3, 2, 4],
+                label: "Saída",
+              },
+            ]}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <CustomChartLine />
+          <CustomChartLine
+            labels={[
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+            ]}
+            title={"Atividade nos ultimos 10 dias"}
+            heads={[
+              {
+                colors: "orange",
+                data: [1, 2, 3, 1, 2],
+                label: "Atividade do sistema",
+              },
+            ]}
+          />
         </Grid>
       </Grid>
     </CustomDrawerDefault>

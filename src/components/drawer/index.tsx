@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-
+import Cookies from "js-cookie";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,8 +11,10 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  ToggleButton,
+  useTheme,
 } from "@mui/material";
-import { ChevronRight, Menu } from "@mui/icons-material";
+import { Brightness7, ChevronRight, DarkMode, Menu } from "@mui/icons-material";
 
 import React, { ReactNode } from "react";
 import {
@@ -58,6 +60,14 @@ const CustomDrawer = (props: Props) => {
     [dispatch]
   );
 
+  const currentTheme = Cookies.get("THEME_DEFAULT");
+  const toggleTheme = () => {
+    const newTheme =
+      currentTheme == "THEME_DARK" ? "THEME_LIGHT" : "THEME_DARK";
+    Cookies.set("THEME_DEFAULT", newTheme);
+    window.location.reload();
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -67,6 +77,7 @@ const CustomDrawer = (props: Props) => {
         sx={{
           display: "flex",
           alignItems: "stretch",
+          background: useTheme().palette.secondary.main,
         }}
         position="fixed"
         open={props.open}
@@ -171,6 +182,23 @@ const CustomDrawer = (props: Props) => {
               ))}
             </div>
           ))}
+          <ToggleButton
+            value="check"
+            selected={
+              currentTheme == null
+                ? false
+                : currentTheme == "THEME_LIGHT"
+                ? false
+                : true
+            }
+            onChange={() => toggleTheme()}
+          >
+            {currentTheme == null || currentTheme == "THEME_LIGHT" ? (
+              <Brightness7 color="primary" />
+            ) : (
+              <DarkMode color="primary" />
+            )}
+          </ToggleButton>
         </List>
       </CustomDrawerConfig>
       <Box component="main" sx={{ flexGrow: 1 }}>

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Paper } from "@mui/material";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -21,40 +21,47 @@ ChartJS.register(
   Legend
 );
 
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top" as const,
-    },
-    title: {
-      display: true,
-      text: "Chart.js Line Chart",
-    },
-  },
-};
+interface head {
+  label: string;
+  data: number[];
+  colors: string;
+}
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
+interface Props {
+  labels: string[];
+  title: string;
+  heads: head[];
+}
 
-interface Props {}
-
-export function CustomChartLine({}: Props) {
+export function CustomChartLine(props: Props) {
+  const dataset = props.heads.map((item) => {
+    return {
+      label: item.label,
+      data: item.data,
+      borderColor: item.colors,
+      backgroundColor: item.colors,
+    };
+  });
   return (
-    <Box>
+    <Paper elevation={4} sx={{ margin: 2 }}>
       <Line
-        options={options}
-        data={{
-          labels,
-          datasets: [
-            {
-              label: "Dataset 1",
-              data: [12, 19, 3, 5, 2, 3],
-              borderColor: "rgb(255, 99, 132)",
-              backgroundColor: "rgba(255, 99, 132, 0.5)",
+        options={{
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "top" as const,
             },
-          ],
+            title: {
+              display: true,
+              text: props.title,
+            },
+          },
+        }}
+        data={{
+          labels: props.labels,
+          datasets: [...dataset],
         }}
       />
-    </Box>
+    </Paper>
   );
 }
