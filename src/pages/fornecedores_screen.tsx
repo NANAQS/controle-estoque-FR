@@ -1,12 +1,12 @@
-import { Button, ButtonGroup, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import CustomDrawerDefault from "../components/customDefaultDrawer";
 import CustomTable from "../components/customTable";
-import { Group } from "@mui/icons-material";
+import { FmdGood } from "@mui/icons-material";
 import CustomBarras from "../components/customBarras";
 
 type Props = {};
 
-export default function UsuariosScreen({}: Props) {
+export default function FornecedoresScreen({}: Props) {
   return (
     <CustomDrawerDefault>
       <div
@@ -20,13 +20,13 @@ export default function UsuariosScreen({}: Props) {
         }}
       >
         <div>
-          <CustomBarras routeName="usuarios" />
+          <CustomBarras routeName="fornecedores" />
           <Typography variant="body1">
-            <Group color="primary" />
-            Lista Usuarios
+            <FmdGood color="primary" />
+            Fornecedores
           </Typography>
           <Button color="info" sx={{ width: "100%" }} variant="outlined">
-            Novo Usuario
+            Novo Fornecedor
           </Button>
         </div>
         <CustomTable
@@ -34,13 +34,12 @@ export default function UsuariosScreen({}: Props) {
             "Foto",
             "Ord",
             "Codigo",
-            "Usuario",
-            "Cargo",
-            "Nivel Acesso",
+            "Fantasia",
+            "Cidade",
+            "Estado",
+            "Razão Social",
+            "CPF/CNPJ",
             "Data Cadastro",
-            "Último Acesso",
-            "Bloqueado",
-            "Acões",
           ]}
           tableData={[
             [
@@ -50,19 +49,12 @@ export default function UsuariosScreen({}: Props) {
               />,
               "1",
               "235467",
-              "Carlos De Andrade",
-              "Caixa",
-              "Parcial",
-              "23/05/2023",
-              "25/06/2023",
-              "Não",
-              <ButtonGroup
-                variant="contained"
-                aria-label="Disabled elevation buttons"
-              >
-                <Button>Bloquear</Button>
-                <Button>Verificar</Button>
-              </ButtonGroup>,
+              "Bruxinha",
+              "Ponta Grossa",
+              "Paraná",
+              "Ser Comunista",
+              "124.245.223-54",
+              "23/03/2023",
             ],
           ]}
         />
