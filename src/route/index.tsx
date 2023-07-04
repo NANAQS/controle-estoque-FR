@@ -7,6 +7,7 @@ import CategoriasScreen from "../pages/categorias_screen";
 import EntradaScreen from "../pages/entrada_screen";
 import SaidaScreen from "../pages/saida_screen";
 import FornecedoresScreen from "../pages/fornecedores_screen";
+import Agendamento_HomeScreen from "../pages/agendamento/home";
 
 export const route = createBrowserRouter([
   {
@@ -40,5 +41,9 @@ export const route = createBrowserRouter([
   {
     path: "/fornecedores",
     element: <FornecedoresScreen />,
+  },
+  {
+    path: "/agendamento/home",
+    element: <Agendamento_HomeScreen />,
   },
 ]);

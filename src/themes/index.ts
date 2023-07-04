@@ -1,12 +1,12 @@
 import { createTheme } from "@mui/material";
 
-const PRIMARY_LIGHT = "#7F8C95";
-const SECUNDARY_LIGHT = "#414e59";
+const PRIMARY_LIGHT = "#35788c";
+const SECUNDARY_LIGHT = "#6db4c9";
 const CONTRAST_LIGHT = "#BFD5E1";
 
-const PRIMARY_DARK = "#525b61";
-const SECUNDARY_DARK = "#252d33";
-const CONTRAST_DARK = "#66737a";
+const PRIMARY_DARK = "#1f4854";
+const SECUNDARY_DARK = "#4c7f8f";
+const CONTRAST_DARK = "#10252b";
 
 export const themeLight = createTheme({
   palette: {
@@ -40,6 +40,9 @@ export const themeLight = createTheme({
         body1: {
           color: SECUNDARY_LIGHT,
           fontSize: 40,
+        },
+        button: {
+          color: SECUNDARY_LIGHT,
         },
       },
     },
@@ -97,6 +100,9 @@ export const themeDark = createTheme({
         body1: {
           color: SECUNDARY_DARK,
           fontSize: 40,
+        },
+        button: {
+          color: SECUNDARY_DARK,
         },
       },
     },

@@ -13,6 +13,9 @@ import {
   ListItemText,
   ToggleButton,
   useTheme,
+  DrawerProps,
+  Avatar,
+  Drawer,
 } from "@mui/material";
 import { Brightness7, ChevronRight, DarkMode, Menu } from "@mui/icons-material";
 
@@ -35,6 +38,12 @@ interface Menu {
   divider: string;
 }
 
+export interface menu2 {
+  listNameUsers: string[];
+  listPhotosUsers: string[];
+  anchor: DrawerProps["anchor"];
+}
+
 type Props = {
   children: ReactNode;
   handleDrawerOpen: React.MouseEventHandler<HTMLButtonElement>;
@@ -43,6 +52,7 @@ type Props = {
   title?: string;
   left: JSX.Element;
   menu: Menu[];
+  double?: menu2[];
 };
 
 const CustomDrawer = (props: Props) => {
@@ -201,6 +211,38 @@ const CustomDrawer = (props: Props) => {
           </ToggleButton>
         </List>
       </CustomDrawerConfig>
+
+      {props.double != null && windowWidth == true
+        ? props.double.map((item, index) => {
+            return (
+              <Drawer
+                key={index}
+                anchor={item.anchor}
+                variant={"permanent"}
+                open
+              >
+                <List sx={{ marginTop: 10 }}>
+                  {item.listPhotosUsers.map((photo, indexPhoto) => {
+                    console.log(item);
+                    return (
+                      <div style={{ textAlign: "center", padding: 10 }}>
+                        <Avatar
+                          src={photo}
+                          alt={photo}
+                          sx={{ width: 40, height: 40 }}
+                        />
+                        <Typography variant="overline">
+                          {item.listNameUsers[indexPhoto]}
+                        </Typography>
+                      </div>
+                    );
+                  })}
+                </List>
+              </Drawer>
+            );
+          })
+        : null}
+
       <Box component="main" sx={{ flexGrow: 1 }}>
         {props.children}
       </Box>
