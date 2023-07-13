@@ -1,12 +1,14 @@
 import { createTheme } from "@mui/material";
 
+const FONT_DEFAULT = "Fira Code, monospace";
+
 const PRIMARY_LIGHT = "#35788c";
 const SECUNDARY_LIGHT = "#6db4c9";
 const CONTRAST_LIGHT = "#BFD5E1";
 
-const PRIMARY_DARK = "#1f4854";
-const SECUNDARY_DARK = "#4c7f8f";
-const CONTRAST_DARK = "#10252b";
+const PRIMARY_DARK = "#353fa1";
+const SECUNDARY_DARK = "#0d102e";
+const CONTRAST_DARK = "#2a317a";
 
 export const themeLight = createTheme({
   palette: {
@@ -30,38 +32,44 @@ export const themeLight = createTheme({
       styleOverrides: {
         caption: {
           color: PRIMARY_LIGHT,
+          fontFamily: FONT_DEFAULT,
         },
         overline: {
           color: PRIMARY_LIGHT,
+          fontFamily: FONT_DEFAULT,
         },
         subtitle2: {
           color: CONTRAST_LIGHT,
+          fontFamily: FONT_DEFAULT,
         },
         body1: {
           color: SECUNDARY_LIGHT,
           fontSize: 40,
+          fontFamily: FONT_DEFAULT,
         },
         button: {
           color: SECUNDARY_LIGHT,
+          fontFamily: FONT_DEFAULT,
         },
       },
     },
     MuiIconButton: {
       styleOverrides: {
-        colorPrimary: PRIMARY_LIGHT,
+        colorPrimary: SECUNDARY_LIGHT,
       },
     },
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: SECUNDARY_LIGHT,
+          backgroundColor: "#fff",
+          border: "none",
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
         colorSecondary: {
-          color: SECUNDARY_LIGHT,
+          color: "#fff",
         },
       },
     },
@@ -90,19 +98,24 @@ export const themeDark = createTheme({
       styleOverrides: {
         caption: {
           color: PRIMARY_DARK,
+          fontFamily: FONT_DEFAULT,
         },
         overline: {
           color: PRIMARY_DARK,
+          fontFamily: FONT_DEFAULT,
         },
         subtitle2: {
           color: CONTRAST_DARK,
+          fontFamily: FONT_DEFAULT,
         },
         body1: {
           color: SECUNDARY_DARK,
           fontSize: 40,
+          fontFamily: FONT_DEFAULT,
         },
         button: {
           color: SECUNDARY_DARK,
+          fontFamily: FONT_DEFAULT,
         },
       },
     },
@@ -121,7 +134,7 @@ export const themeDark = createTheme({
     MuiAppBar: {
       styleOverrides: {
         colorSecondary: {
-          color: SECUNDARY_LIGHT,
+          color: SECUNDARY_DARK,
         },
       },
     },

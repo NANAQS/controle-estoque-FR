@@ -1,4 +1,5 @@
 import {
+  AccessAlarm,
   Dashboard,
   Discount,
   FmdGood,
@@ -6,8 +7,10 @@ import {
   Home,
   Inventory,
   InventoryTwoTone,
+  NotificationAdd,
   Person,
   ReceiptLong,
+  ShoppingCart,
 } from "@mui/icons-material";
 import CustomDrawer from "../drawer";
 import { Typography } from "@mui/material";
@@ -37,6 +40,12 @@ function CustomDrawerDefault({ children }: Props) {
             {
               icon: <Home color="primary" />,
               text: "Tela Inicial",
+              href: "/",
+            },
+            {
+              icon: <ShoppingCart color="primary" />,
+              text: "Caixa",
+              href: "/caixa",
             },
           ],
         },
@@ -46,14 +55,17 @@ function CustomDrawerDefault({ children }: Props) {
             {
               icon: <Discount color="primary" />,
               text: "Produto",
+              href: "/produtos",
             },
             {
               icon: <Dashboard color="primary" />,
               text: "Categorias",
+              href: "/categorias",
             },
             {
               icon: <FmdGood color="primary" />,
               text: "Fornecedores",
+              href: "/fornecedores",
             },
           ],
         },
@@ -63,10 +75,12 @@ function CustomDrawerDefault({ children }: Props) {
             {
               icon: <Inventory color="primary" />,
               text: "Entrada",
+              href: "/entrada",
             },
             {
               icon: <InventoryTwoTone color="primary" />,
               text: "Saída",
+              href: "/saida",
             },
           ],
         },
@@ -77,10 +91,27 @@ function CustomDrawerDefault({ children }: Props) {
             {
               icon: <Group color="primary" />,
               text: "Usuários",
+              href: "/usuarios",
             },
             {
               icon: <ReceiptLong color="primary" />,
               text: "Logs de Atividades",
+              href: "/log",
+            },
+          ],
+        },
+        {
+          divider: "AGENDAMENTO",
+          item: [
+            {
+              icon: <AccessAlarm color="primary" />,
+              text: "Agendamento",
+              href: "/agendamento/home",
+            },
+            {
+              icon: <NotificationAdd color="primary" />,
+              text: "Novo Agendamento",
+              href: "/produtos",
             },
           ],
         },

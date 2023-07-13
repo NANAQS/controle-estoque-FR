@@ -3,12 +3,44 @@ import CustomDrawerDefault from "../components/customDefaultDrawer";
 import CustomTable from "../components/customTable";
 import { FmdGood } from "@mui/icons-material";
 import CustomBarras from "../components/customBarras";
+import { FieldValues } from "react-hook-form";
+import MyDropzone from "../components/uploader";
+import { ModalCustom } from "../components/ModalCustom";
+import React from "react";
 
 type Props = {};
 
+interface FileWithPreview extends File {
+  preview: string;
+}
+
 export default function FornecedoresScreen({}: Props) {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const [photos, setPhotos] = React.useState<FileWithPreview[]>();
+  const data = [
+    "Foto",
+    "Ord",
+    "Codigo",
+    "Fantasia",
+    "Cidade",
+    "Estado",
+    "Razão Social",
+    "CPF/CNPJ",
+    "Data Cadastro",
+  ];
+
+  const dataModal = {
+    headers: data,
+    options: [<MyDropzone setPhotos={setPhotos} />],
+  };
+
+  const onSubmit = (values: FieldValues) => {
+    setOpen(false);
+  };
   return (
     <CustomDrawerDefault>
+      <ModalCustom dataModel={dataModal} onSubmit={onSubmit} open={open} />
       <div
         style={{
           padding: 10,
@@ -25,22 +57,17 @@ export default function FornecedoresScreen({}: Props) {
             <FmdGood color="primary" />
             Fornecedores
           </Typography>
-          <Button color="info" sx={{ width: "100%" }} variant="outlined">
+          <Button
+            onClick={handleOpen}
+            color="info"
+            sx={{ width: "100%" }}
+            variant="outlined"
+          >
             Novo Fornecedor
           </Button>
         </div>
         <CustomTable
-          tableHeader={[
-            "Foto",
-            "Ord",
-            "Codigo",
-            "Fantasia",
-            "Cidade",
-            "Estado",
-            "Razão Social",
-            "CPF/CNPJ",
-            "Data Cadastro",
-          ]}
+          tableHeader={data}
           tableData={[
             [
               <img

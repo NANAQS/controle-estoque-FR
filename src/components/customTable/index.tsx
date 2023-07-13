@@ -24,6 +24,8 @@ const DynamicTable: React.FC<TableProps> = ({ tableHeader, tableData }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  console.log(tableData);
+
   const tableRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -39,7 +41,7 @@ const DynamicTable: React.FC<TableProps> = ({ tableHeader, tableData }) => {
   };
 
   const filteredData = tableData.filter((row) =>
-    row.some((cell) => {
+    row.some((cell: any) => {
       if (typeof cell === "string") {
         return cell.toLowerCase().includes(searchText.toLowerCase());
       }

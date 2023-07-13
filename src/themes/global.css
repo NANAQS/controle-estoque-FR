@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "Fira Code";
+  font-weight: normal;
+  src: url("font/FiraCode-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Fira Code";
+  font-weight: bold;
+  src: url("font/FiraCode-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Fira Code";
+  font-weight: 300;
+  src: url("font/FiraCode-Light.ttf") format("truetype");
+}

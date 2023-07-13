@@ -1,4 +1,4 @@
-import Agendamento_CustomDrawerDefault from "../../components/Agendamento_customDefaultDrawer";
+import Agendamento_CustomDrawerDefault from "../../components/Scheduling_customDefaultDrawer";
 
 type Props = {};
 
@@ -8,7 +8,7 @@ function Agendamento_HomeScreen({}: Props) {
       double={[
         {
           anchor: "right",
-          listNameUsers: [1, 2, 3, 4].map((item) => "Joao"),
+          listNameUsers: [1, 2, 3, 4].map((_) => "Joao"),
           listPhotosUsers: [
             "https://xsgames.co/randomusers/avatar.php?g=male",
             "https://xsgames.co/randomusers/avatar.php?g=female",

@@ -8,6 +8,7 @@ import { ThemeProvider } from "@mui/material";
 import { themeDark, themeLight } from "./themes";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import "./themes/global.css";
 
 const currentTheme = Cookies.get("THEME_DEFAULT");
 

@@ -1,5 +1,5 @@
-import Box from "@mui/material/Box";
 import Cookies from "js-cookie";
+import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -25,12 +25,13 @@ import {
   CustomDrawerHeader,
 } from "./components/configsDrawer";
 import { CustomAppBar } from "./components/appBar";
-import { useDispatch } from "react-redux";
-import { clicksIconDrawer } from "../../store/modules/drawer/actions";
+
+import { Link } from "react-router-dom";
 
 interface items {
   text: string;
   icon: JSX.Element;
+  href: string;
 }
 
 interface Menu {
@@ -56,18 +57,8 @@ type Props = {
 };
 
 const CustomDrawer = (props: Props) => {
-  const dispatch = useDispatch();
-  const [windowWidth, _] = React.useState(window.innerWidth > 1032);
-
-  const clickButtons = React.useCallback(
-    (text: string) => {
-      dispatch(
-        clicksIconDrawer({
-          text: text,
-        })
-      );
-    },
-    [dispatch]
+  const [windowWidth, setWindowWidth] = React.useState(
+    window.innerWidth > 1032
   );
 
   const currentTheme = Cookies.get("THEME_DEFAULT");
@@ -83,7 +74,6 @@ const CustomDrawer = (props: Props) => {
       <CssBaseline />
       <CustomAppBar
         elevation={windowWidth ? 0 : 1}
-        color="secondary"
         sx={{
           display: "flex",
           alignItems: "stretch",
@@ -147,48 +137,52 @@ const CustomDrawer = (props: Props) => {
               >
                 <strong>{item.divider}</strong>
               </Typography>
+
               {item.item.map((item, id) => (
-                <ListItem
-                  onClick={() => clickButtons(item.text)}
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={item.href}
                   key={id}
-                  disablePadding
-                  sx={{ display: "block" }}
                 >
-                  <ListItemButton
-                    sx={{
-                      minHeight: 48,
-                      justifyContent: props.open ? "initial" : "center",
-                      px: 2.5,
-                    }}
-                  >
-                    <ListItemIcon
+                  <ListItem key={id} disablePadding sx={{ display: "block" }}>
+                    <ListItemButton
                       sx={{
-                        minWidth: 0,
-                        mr: windowWidth ? 3 : props.open ? 3 : "auto",
-                        justifyContent: "center",
+                        minHeight: 48,
+                        borderTopRightRadius: 10,
+                        borderBottomRightRadius: 10,
+                        justifyContent: props.open ? "initial" : "center",
+                        px: 2.5,
                       }}
                     >
-                      {item.icon}
-                    </ListItemIcon>
-                    <ListItemText
-                      sx={{ opacity: windowWidth ? 1 : props.open ? 1 : 0 }}
-                    >
-                      <Typography
+                      <ListItemIcon
                         sx={{
-                          display: windowWidth
-                            ? "block"
-                            : props.open
-                            ? "block"
-                            : "none",
-                          textAlign: "center",
+                          minWidth: 0,
+                          mr: windowWidth ? 3 : props.open ? 3 : "auto",
+                          justifyContent: "center",
                         }}
-                        variant="overline"
                       >
-                        <strong>{item.text}</strong>
-                      </Typography>
-                    </ListItemText>
-                  </ListItemButton>
-                </ListItem>
+                        {item.icon}
+                      </ListItemIcon>
+                      <ListItemText
+                        sx={{ opacity: windowWidth ? 1 : props.open ? 1 : 0 }}
+                      >
+                        <Typography
+                          sx={{
+                            display: windowWidth
+                              ? "block"
+                              : props.open
+                              ? "block"
+                              : "none",
+                            textAlign: "center",
+                          }}
+                          variant="overline"
+                        >
+                          <strong>{item.text}</strong>
+                        </Typography>
+                      </ListItemText>
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
               ))}
             </div>
           ))}
@@ -212,7 +206,7 @@ const CustomDrawer = (props: Props) => {
         </List>
       </CustomDrawerConfig>
 
-      {props.double != null && windowWidth == true
+      {props.double != null && window.innerWidth > 1032
         ? props.double.map((item, index) => {
             return (
               <Drawer
@@ -223,7 +217,6 @@ const CustomDrawer = (props: Props) => {
               >
                 <List sx={{ marginTop: 10 }}>
                   {item.listPhotosUsers.map((photo, indexPhoto) => {
-                    console.log(item);
                     return (
                       <div style={{ textAlign: "center", padding: 10 }}>
                         <Avatar

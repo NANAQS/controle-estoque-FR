@@ -3,12 +3,41 @@ import CustomDrawerDefault from "../components/customDefaultDrawer";
 import CustomTable from "../components/customTable";
 import { Inventory } from "@mui/icons-material";
 import CustomBarras from "../components/customBarras";
+import React from "react";
+import { FieldValues } from "react-hook-form";
+import { ModalCustom } from "../components/ModalCustom";
 
 type Props = {};
 
 export default function EntradaScreen({}: Props) {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const data = [
+    "Ord",
+    "Num",
+    "Nota",
+    "Fornecedor",
+    "Valor",
+    "Desconto",
+    "Acréscimo",
+    "Total",
+    "Emissão",
+    "Entrada",
+    "Cadastro",
+  ];
+
+  const dataModal = {
+    headers: data,
+    options: [],
+  };
+
+  const onSubmit = (values: FieldValues) => {
+    setOpen(false);
+  };
+
   return (
     <CustomDrawerDefault>
+      <ModalCustom dataModel={dataModal} onSubmit={onSubmit} open={open} />
       <div
         style={{
           padding: 10,
@@ -25,24 +54,17 @@ export default function EntradaScreen({}: Props) {
             <Inventory color="primary" />
             Entradas no Estoque
           </Typography>
-          <Button color="info" sx={{ width: "100%" }} variant="outlined">
+          <Button
+            onClick={handleOpen}
+            color="info"
+            sx={{ width: "100%" }}
+            variant="outlined"
+          >
             Nova Entrada
           </Button>
         </div>
         <CustomTable
-          tableHeader={[
-            "Ord",
-            "Num",
-            "Nota",
-            "Fornecedor",
-            "Valor",
-            "Desconto",
-            "Acréscimo",
-            "Total",
-            "Emissão",
-            "Entrada",
-            "Cadastro",
-          ]}
+          tableHeader={data}
           tableData={[
             [
               "0",

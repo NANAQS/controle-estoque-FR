@@ -1,6 +1,15 @@
 import { combineReducers } from "redux";
-import drawer from "./drawer/reducer";
+import loginClick from "./login/reducer";
+import productsReducer from "./products/reducer";
+import { IUserLogin } from "./login/types";
+import { IProductsInterface } from "./products/types";
+
+export interface IState {
+  loginClick: IUserLogin;
+  productsReducer: IProductsInterface;
+}
 
 export default combineReducers({
-  drawer,
+  loginClick,
+  productsReducer,
 });
