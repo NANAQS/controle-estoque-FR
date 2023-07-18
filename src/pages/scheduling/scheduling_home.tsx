@@ -1,72 +1,131 @@
-import { Box, ThemeProvider, createTheme } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Drawer,
+  InputAdornment,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Step,
+  StepLabel,
+  Stepper,
+  TextField,
+  darken,
+  lighten,
+  styled,
+} from "@mui/material";
 import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import SchedulingDrawer from "../../components/Scheduling_customDefaultDrawer";
+import "moment/locale/br";
+import moment from "moment";
+import { database } from "../../database/agendamento";
+import { useState } from "react";
+import { clientes } from "../../database/clients";
+import { Process1 } from "../../components/scheduling_process_screens/process1";
+import { SchedulingCreate } from "../../components/scheduling_create";
+import { Process2 } from "../../components/scheduling_process_screens/process2";
 
-moment.locale("pt-BR");
 const localizer = momentLocalizer(moment);
 type Props = {};
 
-const theme = createTheme({});
+const defaultMessages = {
+  date: "Data",
+  time: "Hora",
+  event: "Evento",
+  allDay: "Dia Todo",
+  week: "Semana",
+  work_week: "Eventos",
+  day: "Dia",
+  month: "Mês",
+  previous: "Anterior",
+  next: "Próximo",
+  yesterday: "Ontem",
+  tomorrow: "Amanhã",
+  today: "Hoje",
+  agenda: "Agenda",
+  noEventsInRange: "Não há eventos no período.",
+  showMore: function showMore(total: any) {
+    return "+" + total + " mais";
+  },
+};
+
+const steps = [
+  "Procura de clientes cadastrados",
+  "Selecione uma data",
+  "Selecione um serviço",
+];
 
 function SchedulingHome({}: Props) {
-  const events = [
-    {
-      title: "Abertura de Evento Comunitario",
-      allDay: true,
-      start: new Date(2023, 7, 0),
-      end: new Date(2023, 7, 1),
-    },
-    {
-      title: "Oferta corte cabelo",
-      start: new Date(2023, 7, 7),
-      end: new Date(2023, 7, 10),
-    },
-
-    {
-      title: "Evento Interno da empresa",
-      start: new Date(2023, 7, 13, 0, 0, 0),
-      end: new Date(2023, 7, 20, 0, 0, 0),
-    },
-
-    {
-      title: "Conferencia com Funcionarios",
-      start: new Date(2023, 10, 6, 0, 0, 0),
-      end: new Date(2023, 10, 13, 0, 0, 0),
-    },
-
-    {
-      title: "Reuniao",
-      start: new Date(2023, 7, 9, 0, 0, 0),
-      end: new Date(2023, 7, 9, 0, 0, 0),
-    },
-    {
-      title: "Conference",
-      start: new Date(2023, 7, 11),
-      end: new Date(2023, 7, 13),
-      desc: "Big conference for important people",
-    },
-    {
-      title: "Chamada com fornecedors",
-      start: new Date(2023, 7, 12, 10, 30, 0, 0),
-      end: new Date(2023, 7, 12, 12, 30, 0, 0),
-      desc: "Apresentacao de propostas para fornecedores externos",
-    },
-  ];
+  const [openDrawer, setOpenDrawer] = useState(true);
+  const [screen1Value, setScreen1Value] = useState("");
+  const [screen2Value, setScreen2Value] = useState("");
+  const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <SchedulingDrawer>
-      <Box sx={{ marginTop: 10 }}>
-        <Calendar
-          localizer={localizer}
-          events={events}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 500 }}
-        />
-      </Box>
-    </SchedulingDrawer>
+    <>
+      <SchedulingCreate
+        openDrawer={openDrawer}
+        activeStep={activeStep}
+        value={[screen1Value, screen2Value]}
+        screens={[
+          <Process1 clientes={clientes} setValue={setScreen1Value} />,
+          <Process2
+            onAccept={(value) => {
+              setActiveStep(2);
+            }}
+          />,
+        ]}
+        labels={steps}
+        clickPerScreens={[
+          {
+            click() {
+              if (screen1Value != "") {
+                setActiveStep(1);
+              }
+            },
+            label: ["Confirmar Cliente", "Cadastrar novo cliente"],
+          },
+          {
+            label: [],
+          },
+          {
+            label: ["Confirmar Pedido", "Preencha o pedido"],
+          },
+        ]}
+      />
+      <SchedulingDrawer>
+        <Box sx={{ marginTop: 10 }}>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Button sx={{ marginBottom: 2, width: "90%" }} variant="outlined">
+              Criar Novo Agendamento
+            </Button>
+          </Box>
+          <Calendar
+            messages={defaultMessages}
+            formats={{
+              agendaDateFormat: "DD/MM ddd",
+              weekdayFormat: "dddd",
+            }}
+            localizer={localizer}
+            events={database}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ height: 500 }}
+          />
+        </Box>
+      </SchedulingDrawer>
+    </>
   );
 }
 

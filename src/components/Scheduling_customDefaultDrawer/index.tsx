@@ -48,68 +48,17 @@ function CustomDrawerDefault({ children, double }: Props) {
           ],
         },
         {
-          divider: "GERENCIAMENTO",
+          divider: "AGENDAMENTO",
           item: [
             {
               icon: <WorkHistory color="primary" />,
               text: "Horarios",
-              href: "/agendamento/horarios",
+              href: "/agendamento/horas",
             },
             {
               icon: <Today color="primary" />,
               text: "Agenda",
               href: "/agendamento/agendar",
-            },
-            {
-              icon: <FmdGood color="primary" />,
-              text: "Fornecedores",
-              href: "/agendamento/home",
-            },
-          ],
-        },
-        {
-          divider: "MOVIMENTAÇÃO",
-          item: [
-            {
-              icon: <Inventory color="primary" />,
-              text: "Entrada",
-              href: "/agendamento/home",
-            },
-            {
-              icon: <InventoryTwoTone color="primary" />,
-              text: "Saída",
-              href: "/agendamento/home",
-            },
-          ],
-        },
-
-        {
-          divider: "ADMINISTRAÇÃO",
-          item: [
-            {
-              icon: <Group color="primary" />,
-              text: "Usuários",
-              href: "/agendamento/home",
-            },
-            {
-              icon: <ReceiptLong color="primary" />,
-              text: "Logs de Atividades",
-              href: "/agendamento/home",
-            },
-          ],
-        },
-        {
-          divider: "AGENDAMENTO",
-          item: [
-            {
-              icon: <AccessAlarm color="primary" />,
-              text: "Agendamento",
-              href: "/agendamento/home",
-            },
-            {
-              icon: <NotificationAdd color="primary" />,
-              text: "Novo Agendamento",
-              href: "/agendamento/home",
             },
           ],
         },

@@ -13,7 +13,7 @@ export const protectedRoute = (route: IRoute, cookie?: string): IRoute[] => {
     (cookie ?? log) != null
       ? route
       : {
-          path: "/",
+          ...route,
           element: <LoginScreen />,
         };
 

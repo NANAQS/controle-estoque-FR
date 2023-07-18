@@ -11,6 +11,7 @@ import Agendamento_HomeScreen from "../pages/scheduling/home";
 import { protectedRoute } from "../utils/routerConfig";
 import { CheckOutScreen } from "../pages/checkout";
 import SchedulingHome from "../pages/scheduling/scheduling_home";
+import { HoursScreen } from "../pages/scheduling/hours";
 
 export const route = createBrowserRouter([
   ...protectedRoute({
@@ -56,5 +57,9 @@ export const route = createBrowserRouter([
   ...protectedRoute({
     path: "/agendamento/agendar",
     element: <SchedulingHome />,
+  }),
+  ...protectedRoute({
+    path: "/agendamento/horas",
+    element: <HoursScreen />,
   }),
 ]);
