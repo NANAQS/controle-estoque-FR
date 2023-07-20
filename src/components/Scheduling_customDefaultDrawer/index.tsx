@@ -12,6 +12,7 @@ import {
   ReceiptLong,
   Today,
   WorkHistory,
+  ContentPaste
 } from "@mui/icons-material";
 import CustomDrawer, { menu2 } from "../drawer";
 import { Typography } from "@mui/material";
@@ -41,9 +42,9 @@ function CustomDrawerDefault({ children, double }: Props) {
           divider: "",
           item: [
             {
-              icon: <Home color="primary" />,
-              text: "Tela Inicial",
-              href: "/agendamento/home",
+              icon: <ContentPaste color="primary" />,
+              text: "Estoque",
+              href: "/",
             },
           ],
         },

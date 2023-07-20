@@ -2,7 +2,9 @@ import { Button, Drawer, List, Step, StepLabel, Stepper } from "@mui/material";
 import React from "react";
 
 type Props = {
+  disabled: boolean | undefined;
   openDrawer: boolean;
+  handleCloseDrawer: () => void;
   activeStep: number;
   value: string[];
   labels: string[];
@@ -10,13 +12,14 @@ type Props = {
   clickPerScreens: {
     click?: () => void;
     label: string[];
+    disabled?: boolean;
   }[];
 };
 
 export const SchedulingCreate = (props: Props) => {
-  const [windowWidth, setWindowWidth] = React.useState(
-    window.innerWidth > 1032
-  );
+  const [windowWidth, setWindowWidth] = React.useState(window.innerWidth > 1032);
+
+
   return (
     <Drawer
       sx={{
@@ -36,23 +39,21 @@ export const SchedulingCreate = (props: Props) => {
         </Stepper>
         {props.screens[props.activeStep]}
       </List>
-      {props.clickPerScreens[props.activeStep].click != null ? (
+      {props.clickPerScreens[props.activeStep]?.click != null ? (
         <Button
           sx={{ margin: 1 }}
-          onClick={() => {
-            props.clickPerScreens[props.activeStep]?.click();
-          }}
+          onClick={props.clickPerScreens[props.activeStep]?.click}
+          disabled={props.value[props.activeStep] == "" && props.activeStep == 0}
           variant={
             props.value[props.activeStep] != "" ? "contained" : "outlined"
           }
         >
-          {props.value[props.activeStep] != ""
-            ? props.clickPerScreens[props.activeStep].label[0]
-            : props.clickPerScreens[props.activeStep].label[1]}
+          {props.clickPerScreens[props.activeStep].label[0]}
         </Button>
       ) : (
         <></>
       )}
+      <Button onClick={props.handleCloseDrawer}>Fechar</Button>
     </Drawer>
   );
 };

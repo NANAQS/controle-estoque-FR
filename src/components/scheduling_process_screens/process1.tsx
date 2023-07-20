@@ -47,7 +47,7 @@ export const Process1 = ({ clientes, setValue }: Props) => {
         getOptionLabel={(option) => option.nome}
         sx={{ width: 300 }}
         renderInput={(params) => (
-          <TextField {...params} label="Procure clientes cadastrados" />
+          <TextField {...params} label="Selecione o funcionário" />
         )}
         onInputChange={(_, v) => setValue(v)}
         renderGroup={(params) => (

@@ -1,36 +1,38 @@
 import {
-  Autocomplete,
   Box,
-  Button,
-  Drawer,
-  InputAdornment,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Step,
-  StepLabel,
-  Stepper,
-  TextField,
-  darken,
-  lighten,
-  styled,
+  Button
 } from "@mui/material";
-import { Calendar, momentLocalizer } from "react-big-calendar";
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import SchedulingDrawer from "../../components/Scheduling_customDefaultDrawer";
-import "moment/locale/br";
-import moment from "moment";
+import "moment/locale/pt-br";
 import { database } from "../../database/agendamento";
 import { useState } from "react";
 import { clientes } from "../../database/clients";
 import { Process1 } from "../../components/scheduling_process_screens/process1";
 import { SchedulingCreate } from "../../components/scheduling_create";
 import { Process2 } from "../../components/scheduling_process_screens/process2";
+import { Process3 } from "../../components/scheduling_process_screens/process3";
+import format from "date-fns/format";
+import startOfWeek from "date-fns/startOfWeek";
+import getDay from "date-fns/getDay";
+import parse from "date-fns/parse";
+import ptBR from 'date-fns/locale/pt-BR';
+import moment from "moment";
 
-const localizer = momentLocalizer(moment);
 type Props = {};
+
+const locales = {
+  "pt-BR": ptBR
+};
+
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  locales,
+});
 
 const defaultMessages = {
   date: "Data",
@@ -38,7 +40,7 @@ const defaultMessages = {
   event: "Evento",
   allDay: "Dia Todo",
   week: "Semana",
-  work_week: "Eventos",
+  work_week: "Dias Úteis",
   day: "Dia",
   month: "Mês",
   previous: "Anterior",
@@ -47,35 +49,55 @@ const defaultMessages = {
   tomorrow: "Amanhã",
   today: "Hoje",
   agenda: "Agenda",
-  noEventsInRange: "Não há eventos no período.",
-  showMore: function showMore(total: any) {
-    return "+" + total + " mais";
-  },
+  noEventsInRange: "Não há eventos nesse intervalo.",
+  showMore: (total: any) => `+${total} mais`,
 };
 
 const steps = [
-  "Procura de clientes cadastrados",
+  "Procura de funcionário",
   "Selecione uma data",
+  "Selecione uma hora",
   "Selecione um serviço",
 ];
 
-function SchedulingHome({}: Props) {
-  const [openDrawer, setOpenDrawer] = useState(true);
+function SchedulingHome({ }: Props) {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [screen1Value, setScreen1Value] = useState("");
   const [screen2Value, setScreen2Value] = useState("");
+  const [screen3Value, setScreen3Value] = useState("");
   const [activeStep, setActiveStep] = useState(0);
+  
+
+  const handleOpenDrawer = () => {
+    setIsDrawerOpen(true);
+  };
+
+  const handleCloseDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
+  const handleSlotSelected = () => {
+    handleOpenDrawer();
+  };
 
   return (
     <>
       <SchedulingCreate
-        openDrawer={openDrawer}
+        openDrawer={isDrawerOpen}
         activeStep={activeStep}
         value={[screen1Value, screen2Value]}
         screens={[
           <Process1 clientes={clientes} setValue={setScreen1Value} />,
           <Process2
-            onAccept={(value) => {
+            onAccept={() => {
               setActiveStep(2);
+            }}
+          />,
+          <Process3
+            date={moment(screen2Value)}
+            onTimeSelected={(time) => {
+              setScreen3Value(time);
+              setActiveStep(3);
             }}
           />,
         ]}
@@ -87,7 +109,7 @@ function SchedulingHome({}: Props) {
                 setActiveStep(1);
               }
             },
-            label: ["Confirmar Cliente", "Cadastrar novo cliente"],
+            label: ["Confirmar funcionário"],
           },
           {
             label: [],
@@ -96,9 +118,12 @@ function SchedulingHome({}: Props) {
             label: ["Confirmar Pedido", "Preencha o pedido"],
           },
         ]}
+        handleCloseDrawer={handleCloseDrawer}
+        disabled={screen1Value === ""}
       />
-      <SchedulingDrawer>
-        <Box sx={{ marginTop: 10 }}>
+      <SchedulingDrawer
+      >
+        <Box sx={{ marginTop: 10, marginRight: 10 }}>
           <Box
             sx={{
               width: "100%",
@@ -107,21 +132,24 @@ function SchedulingHome({}: Props) {
               justifyContent: "center",
             }}
           >
-            <Button sx={{ marginBottom: 2, width: "90%" }} variant="outlined">
+            <Button
+              sx={{ marginBottom: 2, width: "90%" }}
+              variant="outlined"
+              onClick={handleOpenDrawer}
+            >
               Criar Novo Agendamento
             </Button>
           </Box>
           <Calendar
-            messages={defaultMessages}
-            formats={{
-              agendaDateFormat: "DD/MM ddd",
-              weekdayFormat: "dddd",
-            }}
             localizer={localizer}
+            messages={defaultMessages}
+            culture='pt-BR'
             events={database}
             startAccessor="start"
             endAccessor="end"
             style={{ height: 500 }}
+            onSelectSlot={handleSlotSelected}
+            selectable="ignoreEvents"
           />
         </Box>
       </SchedulingDrawer>

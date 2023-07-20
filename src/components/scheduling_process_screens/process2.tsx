@@ -3,7 +3,6 @@ import { LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import moment from "moment";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import "moment/locale/pt-br";
-import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   onAccept: (value: moment.Moment | null) => void;
@@ -16,6 +15,9 @@ export const Process2 = (props: Props) => {
         <StaticDatePicker
           defaultValue={moment(Date.now())}
           onAccept={props.onAccept}
+          slotProps={{
+            actionBar: { actions: ['accept'] },
+          }}
         />
       </LocalizationProvider>
     </ListItem>

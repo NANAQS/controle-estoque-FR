@@ -18,7 +18,6 @@ function Agendamento_HomeScreen({}: Props) {
         },
       ]}
     >
-      OK
     </Agendamento_CustomDrawerDefault>
   );
 }
