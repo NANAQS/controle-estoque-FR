@@ -1,5 +1,4 @@
-import { Box, Button, ThemeProvider, createTheme } from "@mui/material";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import { Avatar, Box, Button, Checkbox, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, ThemeProvider, createTheme } from "@mui/material";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import SchedulingDrawer from "../../components/Scheduling_customDefaultDrawer";
 import "moment/locale/pt-br";
@@ -12,6 +11,11 @@ import { Process2 } from "../../components/scheduling_process_screens/process2";
 import { Process3 } from "../../components/scheduling_process_screens/process3";
 import { Scheduler } from "@aldabil/react-scheduler";
 import moment from "moment";
+import { DatePicker, LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import React from "react";
+import AddService from "../../components/scheduling_process_screens/process4";
+import AppBarWithOptions from "../../components/AppBarWithOptions";
 
 type Props = {};
 
@@ -22,7 +26,7 @@ const steps = [
   "Selecione um serviço",
 ];
 
-function SchedulingHome({}: Props) {
+function SchedulingHome({ }: Props) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [screen1Value, setScreen1Value] = useState("");
   const [screen2Value, setScreen2Value] = useState("");
@@ -37,12 +41,10 @@ function SchedulingHome({}: Props) {
     setIsDrawerOpen(false);
   };
 
-  const handleSlotSelected = () => {
-    handleOpenDrawer();
-  };
 
   return (
     <>
+    <AppBarWithOptions />
       <SchedulingCreate
         openDrawer={isDrawerOpen}
         activeStep={activeStep}
@@ -82,7 +84,6 @@ function SchedulingHome({}: Props) {
         handleCloseDrawer={handleCloseDrawer}
         disabled={screen1Value === ""}
       />
-      <SchedulingDrawer>
         <Box sx={{ marginTop: 10, marginRight: 10 }}>
           <Box
             sx={{
@@ -100,11 +101,80 @@ function SchedulingHome({}: Props) {
               Criar Novo Agendamento
             </Button>
           </Box>
-          <ThemeProvider theme={createTheme({})}>
-            <Scheduler view="month" events={database} />
+          <Box sx={{
+            display: "flex",
+            justifyContent: "space-around",
+            flexDirection: "row"
+          }}>
+            <Box sx={{width: 300, flexDirection: "column", display: "flex",}}>
+              <LocalizationProvider dateAdapter={AdapterMoment}>
+                  <DatePicker label="Selecione uma data" sx={{marginBottom: 3}} />
+                    Funcionario
+                  <Box sx={{width: 300, height: 300, overflowX: "scroll"}}>
+                  {
+                    clientes.map(item => {
+                      return <Box>
+                        <ThemeProvider theme={createTheme({})}>
+                        <ListItem
+                          secondaryAction={
+                            <Checkbox
+                              edge="end"
+                              checked={false}
+                            />
+                          }
+                          disablePadding
+                        >
+                          <ListItemButton>
+                            <ListItemAvatar>
+                              <Avatar
+                                alt={`Foto ${item.nome}`}
+                                src={item.image}
+                              />
+                            </ListItemAvatar>
+                            <ListItemText primary={item.nome} />
+                          </ListItemButton>
+                        </ListItem>
+                        </ThemeProvider>
+                      </Box>
+                    })
+                  }
+                  </Box>
+              </LocalizationProvider>
+            </Box>
+            <ThemeProvider theme={createTheme({})}>
+            <Scheduler height={400} view="week"
+            week={{
+              weekDays: [0, 1, 2, 3, 4, 5], 
+              weekStartOn: 6, 
+              startHour: 9, 
+              endHour: 17,
+              step: 30,
+              navigation: true,
+              disableGoToDay: false
+            }}
+            day={{
+              startHour: 9, 
+              endHour: 17,
+              step: 30,
+              navigation: true,
+            }}  
+            events={[
+              {
+                event_id: 1,
+                title: "Event 1",
+                start: new Date("2021/5/2 09:30"),
+                end: new Date("2021/5/2 10:30"),
+              },
+              {
+                event_id: 2,
+                title: "Event 2",
+                start: new Date("2021/5/4 10:00"),
+                end: new Date("2021/5/4 11:00"),
+              },
+            ]} />
           </ThemeProvider>
+          </Box>
         </Box>
-      </SchedulingDrawer>
     </>
   );
 }
