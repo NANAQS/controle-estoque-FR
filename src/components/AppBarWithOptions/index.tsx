@@ -1,72 +1,59 @@
 // src/components/AppBarWithOptions.tsx
-import React from 'react';
-import { AppBar, Toolbar, Typography, Button, ThemeProvider, createTheme, Box } from '@mui/material';
-import { Group } from '@mui/icons-material';
+import React from "react";
+import { AppBar, Toolbar, Button, Box, Avatar } from "@mui/material";
+import {
+  Assessment,
+  ArrowBack,
+  AttachMoney,
+  Group,
+  ShoppingBag,
+  Today,
+} from "@mui/icons-material";
 
+interface IMenu {}
 
-
-const theme = createTheme({
-  components: {
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          marginBottom: 16,
-        },
-      },
-    },
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          margin: 8,
-        },
-      },
-    },
-  },
-});
-
-interface IMenu {
-
-}
-
-interface IProps {
-}
+interface IProps {}
 
 const AppBarWithOptions: React.FC<IProps> = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6">
-            MyApp
-          </Typography>
-          <Button color="inherit">Opção 1</Button>
-          <Button color="inherit">Opção 2</Button>
-          <Button color="inherit">Opção 3</Button>
-        </Toolbar>
-        <Toolbar>
-          <Button color="inherit">
-            <Group sx={{ marginRight: 1 }} />
-            Agenda
+    <AppBar position="static" sx={{ borderRadius: 2 }}>
+      <Toolbar sx={{ justifyContent: "space-between" }}>
+        <img src={"/public/vite.svg"} />
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+          <Button color="inherit" variant="outlined">
+            <ArrowBack />
+            Voltar para Estoque
           </Button>
-          <Button color="inherit">
-            <Group sx={{ marginRight: 1 }} />
-            Financeiro
-          </Button>
-          <Button color="inherit">
-            <Group sx={{ marginRight: 1 }} />
-            Estoque
-          </Button>
-          <Button color="inherit">
-            <Group sx={{ marginRight: 1 }} />
-            Clientes
-          </Button>
-          <Button color="inherit">
-            <Group sx={{ marginRight: 1 }} />
-            Relatorios
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </ThemeProvider>
+          <Box sx={{ width: 50 }} />
+          <Avatar
+            alt="Usuario"
+            src="https://dummyimage.com/300x300.png?text=Foto"
+          />
+        </Box>
+      </Toolbar>
+      <Toolbar>
+        <Button color="inherit">
+          <Today sx={{ marginRight: 1 }} />
+          Agenda
+        </Button>
+        <Button color="inherit">
+          <AttachMoney sx={{ marginRight: 1 }} />
+          Financeiro
+        </Button>
+        <Button color="inherit">
+          <ShoppingBag sx={{ marginRight: 1 }} />
+          Estoque
+        </Button>
+        <Button color="inherit">
+          <Group sx={{ marginRight: 1 }} />
+          Clientes
+        </Button>
+        <Button color="inherit">
+          <Assessment sx={{ marginRight: 1 }} />
+          Relatorios
+        </Button>
+      </Toolbar>
+    </AppBar>
   );
 };
 
