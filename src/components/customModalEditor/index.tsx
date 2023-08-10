@@ -6,6 +6,7 @@ import { clientes } from "../../database/clients";
 import { Process2 } from "../scheduling_process_screens/process2";
 import moment, { Moment } from "moment";
 import { Process3 } from "../scheduling_process_screens/process3";
+import { services } from "../../database/services";
 
 type Props = {
   props: SchedulerHelpers;
@@ -22,8 +23,9 @@ function index({ props }: Props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [infos1, setInfos1] = React.useState("");
   const [infos2, setInfos2] = React.useState<string>("");
-  const onderSetter = [setInfos1, setInfos2];
-  const orderInfos = [infos1, infos2];
+  const [infos3, setInfos3] = React.useState("");
+  const onderSetter = [setInfos1, setInfos2, setInfos3];
+  const orderInfos = [infos1, infos2, infos3];
   const event = props.edited;
 
   const [date1, setDate1] = React.useState<Moment>(
@@ -59,6 +61,7 @@ function index({ props }: Props) {
         }
       }}
     />,
+    <Process3 services={services} setValue={onderSetter[activeStep]} />,
   ];
   return (
     <List sx={{ padding: 3 }}>
