@@ -1,4 +1,3 @@
-// src/components/AppBarWithOptions.tsx
 import React from "react";
 import { AppBar, Toolbar, Button, Box, Avatar } from "@mui/material";
 import {
